@@ -1,40 +1,48 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="container">
 
-        <div id="player-input">
-            <h1>Tic Tac Toe</h1>
-            <input id="player-1" placeholder="Enter Player 1 Name">
-            <input id="player-2" placeholder="Enter Player 2 Name">
-            <button id="submit">Start Game</button>
-        </div>
+<div class="container">
 
-        <div id="game" class="hidden">
-            <h1>Tic Tac Toe</h1>
-            <div class="message"></div>
+    <!-- Initial Form -->
+    <div class="input-section" id="input-section">
+        <h1 class="title">Tic Tac Toe</h1>
 
-            <div class="board">
-                <div class="cell" id="1"></div>
-                <div class="cell" id="2"></div>
-                <div class="cell" id="3"></div>
-                <div class="cell" id="4"></div>
-                <div class="cell" id="5"></div>
-                <div class="cell" id="6"></div>
-                <div class="cell" id="7"></div>
-                <div class="cell" id="8"></div>
-                <div class="cell" id="9"></div>
-            </div>
-        </div>
+        <label>Player 1</label>
+        <input type="text" id="player-1" placeholder="enter name">
 
+        <label>Player 2</label>
+        <input type="text" id="player-2" placeholder="enter name">
+
+        <button id="submit">Start Game</button>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <!-- Game Section -->
+    <div class="game-section" id="game-section" style="display:none;">
+        <h1 class="title">Tic Tac Toe</h1>
+        <div class="message"></div>
 
+        <div class="board" id="board">
+            <div class="cell" id="1"></div>
+            <div class="cell" id="2"></div>
+            <div class="cell" id="3"></div>
+            <div class="cell" id="4"></div>
+            <div class="cell" id="5"></div>
+            <div class="cell" id="6"></div>
+            <div class="cell" id="7"></div>
+            <div class="cell" id="8"></div>
+            <div class="cell" id="9"></div>
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
