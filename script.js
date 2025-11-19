@@ -1,6 +1,6 @@
 const submitBtn = document.getElementById("submit");
-const player1Input = document.getElementById("player-1");
-const player2Input = document.getElementById("player-2");
+const player1Input = document.getElementById("player1");
+const player2Input = document.getElementById("player2");
 const game = document.getElementById("game");
 const form = document.getElementById("player-form");
 const message = document.querySelector(".message");
@@ -27,7 +27,7 @@ submitBtn.addEventListener("click", () => {
   form.style.display = "none";
   game.style.display = "block";
 
-  currentPlayer = player1; // Player 1 starts
+  currentPlayer = player1;  // Player1 always starts
   updateMessage();
 });
 
@@ -41,7 +41,6 @@ cells.forEach(cell => {
 
     if (gameOver || board[id] !== "") return;
 
-    // Mark the move
     if (currentPlayer === player1) {
       board[id] = "x";
       cell.textContent = "x";
@@ -50,14 +49,12 @@ cells.forEach(cell => {
       cell.textContent = "o";
     }
 
-    // Check for win
     if (checkWin(board[id])) {
-      message.textContent = `${currentPlayer}, congratulations you won!`;
+      message.textContent = `${currentPlayer} congratulations you won!`;
       gameOver = true;
       return;
     }
 
-    // Switch turns
     currentPlayer = currentPlayer === player1 ? player2 : player1;
     updateMessage();
   });
