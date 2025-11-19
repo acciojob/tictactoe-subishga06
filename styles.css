@@ -12,7 +12,6 @@ body {
 .title {
     font-family: 'Brush Script MT', cursive;
     font-size: 50px;
-    margin-bottom: 20px;
 }
 
 .input-section input {
@@ -44,7 +43,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 70px;
+    font-size: 65px;
     cursor: pointer;
 }
 
@@ -57,4 +56,3 @@ button {
     font-size: 22px;
     margin-bottom: 15px;
 }
-
