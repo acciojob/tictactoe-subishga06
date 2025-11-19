@@ -1,88 +1,70 @@
 const submitBtn = document.getElementById("submit");
-const inputSection = document.getElementById("input-section");
-const gameSection = document.getElementById("game-section");
+const player1Input = document.getElementById("player-1");
+const player2Input = document.getElementById("player-2");
+const game = document.getElementById("game");
+const form = document.getElementById("player-form");
 const message = document.querySelector(".message");
 const cells = document.querySelectorAll(".cell");
 
 let player1 = "";
 let player2 = "";
 let currentPlayer = "";
-let currentMark = "x"; // lowercase because Cypress expects 'x'
 let board = ["", "", "", "", "", "", "", "", ""];
+let gameOver = false;
+
+const winPatterns = [
+  [1,2,3],[4,5,6],[7,8,9],
+  [1,4,7],[2,5,8],[3,6,9],
+  [1,5,9],[3,5,7]
+];
 
 submitBtn.addEventListener("click", () => {
-    player1 = document.getElementById("player1").value.trim();
-    player2 = document.getElementById("player2").value.trim();
+  player1 = player1Input.value.trim();
+  player2 = player2Input.value.trim();
 
-    if (player1 === "" || player2 === "") {
-        alert("Please enter both player names");
-        return;
-    }
+  if (!player1 || !player2) return;
 
-    currentPlayer = player1;
-    message.textContent = `${currentPlayer}, you're up`;
+  form.style.display = "none";
+  game.style.display = "block";
 
-    inputSection.style.display = "none";
-    gameSection.style.display = "block";
+  currentPlayer = player1; // Player 1 starts
+  updateMessage();
 });
+
+function updateMessage() {
+  message.textContent = `${currentPlayer}, you're up`;
+}
 
 cells.forEach(cell => {
-    cell.addEventListener("click", () => {
-        const id = cell.id - 1;
+  cell.addEventListener("click", () => {
+    const id = parseInt(cell.id) - 1;
 
-        if (board[id] !== "" || checkWinner()) return;
+    if (gameOver || board[id] !== "") return;
 
-        board[id] = currentMark;
-        cell.textContent = currentMark;
-
-        if (checkWinner()) {
-            message.textContent = `${currentPlayer} congratulations you won!`;
-            highlightWinner();
-            return;
-        }
-
-        switchTurn();
-    });
-});
-
-function switchTurn() {
-    if (currentMark === "x") {
-        currentMark = "o";
-        currentPlayer = player2;
+    // Mark the move
+    if (currentPlayer === player1) {
+      board[id] = "x";
+      cell.textContent = "x";
     } else {
-        currentMark = "x";
-        currentPlayer = player1;
+      board[id] = "o";
+      cell.textContent = "o";
     }
 
-    message.textContent = `${currentPlayer}, you're up`;
-}
+    // Check for win
+    if (checkWin(board[id])) {
+      message.textContent = `${currentPlayer}, congratulations you won!`;
+      gameOver = true;
+      return;
+    }
 
-function checkWinner() {
-    const wins = [
-        [0,1,2], [3,4,5], [6,7,8],
-        [0,3,6], [1,4,7], [2,5,8],
-        [0,4,8], [2,4,6]
-    ];
+    // Switch turns
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
+    updateMessage();
+  });
+});
 
-    return wins.some(pattern => {
-        let [a, b, c] = pattern;
-        return board[a] && board[a] === board[b] && board[a] === board[c];
-    });
-}
-
-function highlightWinner() {
-    const wins = [
-        [0,1,2], [3,4,5], [6,7,8],
-        [0,3,6], [1,4,7], [2,5,8],
-        [0,4,8], [2,4,6]
-    ];
-
-    wins.forEach(pattern => {
-        let [a,b,c] = pattern;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-            document.getElementById(a + 1).classList.add("winner");
-            document.getElementById(b + 1).classList.add("winner");
-            document.getElementById(c + 1).classList.add("winner");
-        }
-    });
+function checkWin(symbol) {
+  return winPatterns.some(pattern =>
+    pattern.every(index => board[index - 1] === symbol)
+  );
 }
